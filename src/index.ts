@@ -13,11 +13,11 @@ About the owner:
 - Name: Haidur
 - Role: Fullstack developer & UI/UX designer
 - Skills: Python, HTML, CSS, JS, Rust, C, next.js, node.js, tailwind css
-- Services: Web application development, UI/UX design, technical consulting
-- Availability: Open to new projects — typical lead time is 2–3 weeks
+- Services: Web application development, UI/UX design, technical consulting - mainly websites 
+- Availability: Open to new projects — typical lead time is 2–3 weeks but can be as quick as over-night
 - Pricing: Project-based; contact for a quote
 - Contact: enquires@haidurqureshi.com
-- Portfolio highlights: known.org.uk, ekonos an online budgeting platform
+- Portfolio highlights: known.org.uk an online revision platform
  
 
 Rules:
