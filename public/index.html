@@ -2,255 +2,287 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chat — Haidur's Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Chat | HaidurQureshi Ltd</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* ── Theme tokens (match the main site: stone / zinc / blue) ── */
     :root {
-      --bg:        #0a0a0b;
-      --surface:   #0f0f11;
-      --surface2:  #161618;
-      --border:    #1e1e22;
-      --border2:   #252528;
-      --text:      #f0f0ee;
-      --muted:     #9a9a96;
-      --faint:     #484848;
-      --accent:    #c8ff5e;
-      --accent2:   #6fdfb8;
-      --user-text: #0a0a0b;
+      --bg:          #fafaf9;
+      --surface:     #ffffff;
+      --surface2:    #f4f4f5;
+      --border:      #e4e4e7;
+      --text:        #18181b;
+      --muted:       #52525b;
+      --faint:       #a1a1aa;
+      --accent:      #2563eb;
+      --accent-text: #ffffff;
+      --online:      #16a34a;
+      --shadow:      0 1px 2px rgb(0 0 0 / .04), 0 12px 40px rgb(0 0 0 / .06);
     }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg:       #09090b;
+        --surface:  #0f0f11;
+        --surface2: #18181b;
+        --border:   #27272a;
+        --text:     #fafafa;
+        --muted:    #a1a1aa;
+        --faint:    #52525b;
+        --online:   #4ade80;
+        --shadow:   none;
+      }
+    }
+
+    html, body { height: 100%; }
 
     body {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Geist', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
-      height: 100dvh;
+      -webkit-font-smoothing: antialiased;
       display: flex;
-      align-items: center;
+      align-items: stretch;
       justify-content: center;
-      padding: 1rem;
     }
 
-    /* ── Layout ── */
+    /* ── Shell: full screen on phones, floating card from tablet up ── */
     .shell {
       width: 100%;
-      max-width: 480px;
-      height: min(680px, 90dvh);
-      background: var(--surface);
-      border: 0.5px solid var(--border);
-      border-radius: 20px;
+      height: 100dvh;
       display: flex;
       flex-direction: column;
+      background: var(--surface);
       overflow: hidden;
-      box-shadow: 0 0 0 1px #ffffff06;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    @media (min-width: 640px) {
+      body { align-items: center; padding: 1.5rem; }
+      .shell {
+        max-width: 720px;
+        height: min(800px, 100%);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        padding-top: 0;
+        padding-bottom: 0;
+      }
     }
 
     /* ── Header ── */
     .header {
-      padding: 16px 20px;
-      border-bottom: 0.5px solid var(--border);
       display: flex;
       align-items: center;
       gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
       flex-shrink: 0;
     }
+    @media (min-width: 640px) { .header { padding: 16px 24px; } }
+
     .avatar {
-      width: 38px;
-      height: 38px;
+      width: 36px; height: 36px;
       border-radius: 50%;
-      background: conic-gradient(from 200deg, var(--accent), var(--accent2), var(--accent));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 14px;
-      color: var(--user-text);
+      background: var(--accent);
+      color: var(--accent-text);
+      display: grid; place-items: center;
+      font-size: 14px; font-weight: 600;
       flex-shrink: 0;
     }
-    .header-meta .name {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      letter-spacing: 0.01em;
+    .header-meta { flex: 1; min-width: 0; }
+    .name {
+      font-size: 15px; font-weight: 600; letter-spacing: -0.01em;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .header-meta .status {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 11px;
-      color: var(--accent2);
-      font-family: 'DM Mono', monospace;
-      margin-top: 1px;
+    .status {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--muted); margin-top: 1px;
     }
-    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--online); }
+
+    .back {
+      font-size: 13px; font-weight: 500; color: var(--muted);
+      text-decoration: none; padding: 6px 10px; border-radius: 999px;
+      transition: background .15s, color .15s;
+      flex-shrink: 0;
+    }
+    .back:hover { background: var(--surface2); color: var(--text); }
 
     /* ── Messages ── */
     .messages {
       flex: 1;
       overflow-y: auto;
-      padding: 20px;
+      overscroll-behavior: contain;
+      padding: 20px 16px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      scroll-behavior: smooth;
+      gap: 14px;
     }
-    .messages::-webkit-scrollbar { width: 3px; }
-    .messages::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+    @media (min-width: 640px) { .messages { padding: 24px; } }
+    .messages::-webkit-scrollbar { width: 6px; }
+    .messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-    .msg { display: flex; gap: 8px; align-items: flex-end; animation: fadeup 0.2s ease; }
+    .msg { display: flex; gap: 8px; align-items: flex-end; }
     .msg.user { flex-direction: row-reverse; }
-    @keyframes fadeup { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
     .msg-avatar {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: conic-gradient(from 200deg, var(--accent), var(--accent2), var(--accent));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 9px;
-      color: var(--user-text);
-      flex-shrink: 0;
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--accent); color: var(--accent-text);
+      display: grid; place-items: center;
+      font-size: 11px; font-weight: 600; flex-shrink: 0;
     }
 
     .bubble {
       padding: 10px 14px;
-      font-size: 13.5px;
-      line-height: 1.6;
-      max-width: 80%;
-      word-break: break-word;
+      font-size: 15px;
+      line-height: 1.55;
+      max-width: min(85%, 560px);
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
     }
     .bubble.bot {
       background: var(--surface2);
-      color: #d8d8d5;
-      border: 0.5px solid var(--border2);
-      border-radius: 4px 14px 14px 14px;
+      border: 1px solid var(--border);
+      border-radius: 6px 16px 16px 16px;
     }
     .bubble.user {
       background: var(--accent);
-      color: var(--user-text);
-      font-weight: 500;
-      border-radius: 14px 14px 4px 14px;
+      color: var(--accent-text);
+      border-radius: 16px 16px 6px 16px;
     }
 
     /* ── Typing indicator ── */
-    .typing { display: flex; gap: 4px; align-items: center; padding: 12px 14px; }
+    .typing { display: flex; gap: 4px; align-items: center; height: 1.55em; }
     .typing span {
-      width: 6px; height: 6px; background: var(--faint);
-      border-radius: 50%;
+      width: 6px; height: 6px; background: var(--faint); border-radius: 50%;
       animation: blink 1.2s infinite;
     }
-    .typing span:nth-child(2) { animation-delay: 0.18s; }
-    .typing span:nth-child(3) { animation-delay: 0.36s; }
-    @keyframes blink { 0%,80%,100%{opacity:.25} 40%{opacity:1} }
+    .typing span:nth-child(2) { animation-delay: .18s; }
+    .typing span:nth-child(3) { animation-delay: .36s; }
+    @keyframes blink { 0%, 80%, 100% { opacity: .25 } 40% { opacity: 1 } }
 
-    /* ── Quick chips ── */
+    /* ── Suggestions ── */
     .chips {
-      padding: 4px 20px 12px;
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
+      gap: 8px;
+      padding: 0 16px 12px;
+      overflow-x: auto;
       flex-shrink: 0;
+      scrollbar-width: none;
     }
-    .chip {
-      background: #141416;
-      border: 0.5px solid var(--border2);
-      color: var(--muted);
-      font-size: 11.5px;
-      font-family: 'DM Mono', monospace;
-      padding: 5px 11px;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-      user-select: none;
-    }
-    .chip:hover { border-color: var(--accent); color: var(--accent); }
+    .chips::-webkit-scrollbar { display: none; }
+    @media (min-width: 640px) { .chips { padding: 0 24px 14px; flex-wrap: wrap; overflow: visible; } }
 
-    /* ── Input row ── */
-    .input-row {
-      padding: 14px 20px;
-      border-top: 0.5px solid var(--border);
+    .chip {
+      font: inherit; font-size: 14px; color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: border-color .15s, background .15s;
+    }
+    .chip:hover { border-color: var(--accent); background: var(--surface2); }
+
+    /* ── Composer ── */
+    .composer {
       display: flex;
       gap: 10px;
-      align-items: center;
+      align-items: flex-end;
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
       flex-shrink: 0;
     }
-    .input-row input {
+    @media (min-width: 640px) { .composer { padding: 16px 24px; } }
+
+    .composer textarea {
       flex: 1;
-      background: var(--surface2);
-      border: 0.5px solid var(--border2);
+      resize: none;
+      font: inherit;
+      font-size: 16px; /* 16px stops iOS zooming on focus */
+      line-height: 1.4;
       color: var(--text);
-      font-size: 13.5px;
-      font-family: 'Syne', sans-serif;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
       padding: 10px 14px;
-      border-radius: 10px;
+      max-height: 140px;
       outline: none;
-      transition: border-color 0.15s;
+      transition: border-color .15s;
     }
-    .input-row input::placeholder { color: var(--faint); }
-    .input-row input:focus { border-color: #c8ff5e44; }
+    .composer textarea::placeholder { color: var(--faint); }
+    .composer textarea:focus { border-color: var(--accent); }
+
     .send {
-      width: 38px; height: 38px;
+      width: 42px; height: 42px;
       border-radius: 50%;
       background: var(--accent);
       border: none;
       cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
+      display: grid; place-items: center;
       flex-shrink: 0;
-      transition: transform 0.1s, opacity 0.15s;
+      transition: transform .1s, opacity .15s;
     }
-    .send:hover { transform: scale(1.08); }
-    .send:disabled { opacity: 0.35; cursor: default; transform: none; }
-    .send svg { width: 15px; height: 15px; }
+    .send:hover:not(:disabled) { transform: scale(1.06); }
+    .send:disabled { opacity: .35; cursor: default; }
+    .send svg { width: 18px; height: 18px; }
+
+    /* ── Keyboard focus ── */
+    .chip:focus-visible, .send:focus-visible, .back:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 2px;
+    }
+
+    /* ── Motion: one gentle entrance for new messages, off if requested ── */
+    @media (prefers-reduced-motion: no-preference) {
+      .msg { animation: rise .2s ease; }
+      @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    }
   </style>
 </head>
 <body>
 
 <div class="shell" role="main">
-  <!-- Header -->
-  <div class="header">
-    <div class="avatar" aria-hidden="true">H</div><!-- ✏️ Change letter to your initial -->
+  <header class="header">
+    <div class="avatar" aria-hidden="true">H</div>
     <div class="header-meta">
-      <div class="name">Haidur's Assistant</div><!-- ✏️ Your name -->
+      <div class="name">HaidurQureshi Ltd Assistant</div>
       <div class="status"><span class="dot"></span> Online now</div>
     </div>
-  </div>
+    <a class="back" href="https://haidurqureshi.com">Back to site</a>
+  </header>
 
-  <!-- Messages -->
-  <div class="messages" id="messages" aria-live="polite" aria-label="Chat messages">
+  <div class="messages" id="messages" role="log" aria-live="polite" aria-label="Chat messages">
     <div class="msg">
       <div class="msg-avatar" aria-hidden="true">H</div>
-      <div class="bubble bot">
-        Hey! I'm here to help you learn about Haidur's work and services. What would you like to know?
-      </div><!-- ✏️ Customise opening message -->
+      <div class="bubble bot">Hi! I can tell you about HaidurQureshi Ltd and the software we build. What would you like to know?</div>
     </div>
   </div>
 
-  <!-- Quick-reply chips -->
   <div class="chips" id="chips">
-    <button class="chip" onclick="sendChip(this)">→ What do you do?</button>
-    <button class="chip" onclick="sendChip(this)">→ Availability</button>
-    <button class="chip" onclick="sendChip(this)">→ Pricing</button>
-    <button class="chip" onclick="sendChip(this)">→ Get in touch</button>
-  </div><!-- ✏️ Edit chips to match your most common questions -->
+    <button class="chip" type="button">What do you do?</button>
+    <button class="chip" type="button">Availability</button>
+    <button class="chip" type="button">Pricing</button>
+    <button class="chip" type="button">Get in touch</button>
+  </div>
 
-  <!-- Input -->
-  <div class="input-row">
-    <input
-      type="text"
+  <div class="composer">
+    <textarea
       id="userInput"
-      placeholder="Ask me anything…"
+      rows="1"
+      placeholder="Type your message"
       aria-label="Type a message"
       autocomplete="off"
-    />
-    <button class="send" id="sendBtn" aria-label="Send message" onclick="sendMessage()">
-      <svg viewBox="0 0 20 20" fill="none" stroke="#0a0a0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      enterkeyhint="send"
+    ></textarea>
+    <button class="send" id="sendBtn" type="button" aria-label="Send message" disabled>
+      <svg viewBox="0 0 20 20" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <line x1="4" y1="10" x2="16" y2="10"/>
         <polyline points="11,5 16,10 11,15"/>
       </svg>
@@ -266,91 +298,117 @@
 
   // Full conversation history sent to the Worker each turn
   const history = [];
+  let busy = false;
 
-  inputEl.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) sendMessage(); });
-
-  function sendChip(btn) {
-    const text = btn.textContent.replace('→ ', '').trim();
-    // Hide chips after first use to keep the UI clean
-    chipsEl.style.display = 'none';
-    sendMessage(text);
+  /* ── Input behaviour ── */
+  function autoGrow() {
+    inputEl.style.height = 'auto';
+    inputEl.style.height = inputEl.scrollHeight + 'px';
+  }
+  function updateSendState() {
+    sendBtn.disabled = busy || !inputEl.value.trim();
   }
 
+  inputEl.addEventListener('input', () => { autoGrow(); updateSendState(); });
+  inputEl.addEventListener('keydown', e => {
+    // Enter sends, Shift+Enter adds a new line, and IME composition is left alone
+    if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+  sendBtn.addEventListener('click', () => sendMessage());
+  chipsEl.addEventListener('click', e => {
+    const chip = e.target.closest('.chip');
+    if (!chip) return;
+    chipsEl.style.display = 'none';
+    sendMessage(chip.textContent.trim());
+  });
+
+  /* ── Sending ── */
   async function sendMessage(override) {
     const text = (override ?? inputEl.value).trim();
-    if (!text) return;
+    if (!text || busy) return;
 
     inputEl.value = '';
-    setDisabled(true);
+    autoGrow();
+    setBusy(true);
 
-    // User bubble
     appendBubble('user', text);
     history.push({ role: 'user', content: text });
-    scrollBottom();
+    scrollBottom(true);
 
-    // Typing indicator
     const typingEl = appendTyping();
-    scrollBottom();
+    scrollBottom(true);
 
-    // Stream response
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ messages: history }),
       });
-
       if (!res.ok || !res.body) throw new Error('Bad response');
 
       typingEl.remove();
       const botBubble = appendBubble('bot', '');
-      scrollBottom();
 
       const reader  = res.body.getReader();
       const decoder = new TextDecoder();
-      let   full    = '';
+      let buffer = '';
+      let full   = '';
+      let finished = false;
 
-      while (true) {
+      while (!finished) {
         const { done, value } = await reader.read();
         if (done) break;
 
-        const chunk = decoder.decode(value, { stream: true });
-        for (const line of chunk.split('\n')) {
+        // Keep any partial line for the next chunk so tokens are never dropped
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop();
+
+        for (const line of lines) {
           if (!line.startsWith('data: ')) continue;
           const data = line.slice(6).trim();
-          if (data === '[DONE]') break;
+          if (data === '[DONE]') { finished = true; break; }
           try {
-            const json = JSON.parse(data);
-            const token = json?.response ?? '';
-            full += token;
+            full += JSON.parse(data)?.response ?? '';
             botBubble.textContent = full;
             scrollBottom();
           } catch { /* skip non-JSON lines */ }
         }
       }
 
-      if (!full) botBubble.textContent = "Sorry, I couldn't get a response. Try again!";
-      history.push({ role: 'assistant', content: full });
-
+      if (full) {
+        history.push({ role: 'assistant', content: full });
+      } else {
+        botBubble.textContent = "Sorry, I couldn't get a response. Please try again.";
+        history.pop(); // drop the unanswered user message so turns stay in order
+      }
     } catch (err) {
-      typingEl?.remove();
-      appendBubble('bot', "Something went wrong — please try again.");
       console.error(err);
+      typingEl.remove();
+      appendBubble('bot', 'Something went wrong. Please try again.');
+      history.pop();
     }
 
-    setDisabled(false);
+    setBusy(false);
     inputEl.focus();
   }
 
-  function appendBubble(role, text) {
-    const row    = document.createElement('div');
-    row.className = `msg ${role}`;
+  /* ── DOM helpers ── */
+  function makeAvatar() {
+    const av = document.createElement('div');
+    av.className = 'msg-avatar';
+    av.setAttribute('aria-hidden', 'true');
+    av.textContent = 'H';
+    return av;
+  }
 
-    if (role === 'bot') {
-      const av = document.createElement('div');
-      av.className = 'msg-avatar'; av.setAttribute('aria-hidden', 'true'); av.textContent = 'H';
-      row.appendChild(av);
-    }
+  function appendBubble(role, text) {
+    const row = document.createElement('div');
+    row.className = `msg ${role}`;
+    if (role === 'bot') row.appendChild(makeAvatar());
 
     const b = document.createElement('div');
     b.className = `bubble ${role}`;
@@ -363,23 +421,28 @@
   function appendTyping() {
     const row = document.createElement('div');
     row.className = 'msg';
-    const av = document.createElement('div');
-    av.className = 'msg-avatar'; av.setAttribute('aria-hidden', 'true'); av.textContent = 'H';
+    row.appendChild(makeAvatar());
+
     const b = document.createElement('div');
     b.className = 'bubble bot';
+    b.setAttribute('aria-label', 'Assistant is typing');
     b.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
-    row.appendChild(av); row.appendChild(b);
+    row.appendChild(b);
     messagesEl.appendChild(row);
     return row;
   }
 
-  function scrollBottom() {
-    messagesEl.scrollTop = messagesEl.scrollHeight;
+  // Only follow the stream if the reader hasn't scrolled up to re-read something
+  function scrollBottom(force = false) {
+    const nearBottom =
+      messagesEl.scrollHeight - messagesEl.scrollTop - messagesEl.clientHeight < 120;
+    if (force || nearBottom) messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
-  function setDisabled(val) {
-    sendBtn.disabled = val;
+  function setBusy(val) {
+    busy = val;
     inputEl.disabled = val;
+    updateSendState();
   }
 </script>
 </body>
