@@ -3,7 +3,7 @@
  * Cloudflare Workers AI — streaming SSE chat backend
  */
 
-const MODEL_ID = "@cf/meta/llama-3.1-8b-instruct-fp8";
+const MODEL_ID = "@cf/deepseek-ai/deepseek-v4.1-flash-1017";
 
 // ✏️  Edit this to match your actual name, skills, and services
 const SYSTEM_PROMPT = `You are a friendly assistant on a personal portfolio website.
