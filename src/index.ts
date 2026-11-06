@@ -3,7 +3,7 @@
  * Cloudflare Workers AI — streaming SSE chat backend
  */
 
-const MODEL_ID = "@cf/google/gemma-4-26b-a4b-it";
+const MODEL_ID = "@cf/cloudflare/clairic";
 
 // ✏️  Edit this to match your actual name, skills, and services
 const SYSTEM_PROMPT = `You are a friendly assistant on a personal portfolio website.
